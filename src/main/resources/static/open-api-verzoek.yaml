@@ -28,7 +28,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VoegAanbiedenVerzoekenProductToeResponse'
+                $ref: '#/components/schemas/AanbiedenVerzoekenResponse'
         400:
           description: slechte aanvraag
           content:
@@ -114,14 +114,64 @@ components:
           format: uuid
           example: 958a24dc-f97c-11e9-8f0b-362b9e155667
 
-    VoegAanbiedenVerzoekenProductToeResponse:
+    AanbiedenVerzoekenResponse:
       type: object
       required:
-        - aanbiedenVerzoekenProductId
+        - antwoord
       properties:
-        aanbiedenVerzoekenProductId:
-          type: string
-          format: uuid
+        antwoord:
+          type: object
+          properties:
+            ProductResultaat:
+              type: object
+              properties:
+                berichtIdentificatie:
+                  type: string
+                  format: uuid
+                  example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                productIdentificatie:
+                  type: string
+                  format: uuid
+                  example: 2da06183-74a4-425d-8461-a82d70880456
+            ProcesVerwerking:
+              type: object
+              properties:
+                ProcesVerwerkingCode:
+                  type: string
+                  example: 1
+                SeverityCode:
+                  type: string
+                  example: 'WARNING'
+                Melding:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: 'CBER000'
+                      omschrijving:
+                        type: string
+                        example: 'Waarschuwing'
+                      SeverityCode:
+                        type: string
+                        example: 'WARNING'
+            ontvangenVerzoeken:
+              type: object
+              properties:
+                Verzoek:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      identificatie:
+                        type: string
+                        example: 'NL.IMKAD.Verzoek.20200526500001'
+                      ketenidentificatie:
+                        type: string
+                        format: uuid
+                        example: 7a004bc6-75f0-48e9-bc6f-fae278c516c0
+
     VoegAanbiedenVerzoekenProductToeRequestBody:
       type: object
       properties:
