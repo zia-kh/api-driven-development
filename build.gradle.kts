@@ -60,7 +60,12 @@ configure<SourceSetContainer> {
 tasks.withType<KotlinCompile>().configureEach {
     dependsOn("openApiGenerate")
     compilerOptions {
-        freeCompilerArgs.set(listOf("-Xjsr305=strict"))
+        freeCompilerArgs.set(
+            listOf(
+                "-Xjsr305=strict",
+                "-Xannotation-default-target=param-property"
+            )
+        )
         jvmTarget.set(JvmTarget.JVM_21)
     }
 }
