@@ -1,15 +1,23 @@
 package com.udemy.openapidemo.model
 
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.Table
+import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.annotations.Type
+import org.hibernate.type.SqlTypes
 import java.util.UUID
-import javax.persistence.*
+
 
 @Entity
 @Table(name = "post")
 class PostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "UUID")
-    @Type(type = "uuid-char")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "id", nullable = false)
     val id: UUID? = null
 ) {

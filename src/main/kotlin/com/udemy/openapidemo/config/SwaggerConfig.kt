@@ -1,7 +1,9 @@
 package com.udemy.openapidemo.config
 
-import org.springdoc.core.SpringDocConfigProperties
-import org.springdoc.core.SpringDocConfiguration
+
+
+import org.openapitools.SpringDocConfiguration
+import org.springdoc.core.properties.SpringDocConfigProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
