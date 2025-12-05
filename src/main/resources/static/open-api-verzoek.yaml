@@ -1,0 +1,160 @@
+openapi: 3.0.1
+info:
+  title: API Driven development Demo - Verzoek
+  version: 1.0.0
+  description: 'Tutorial for api first development - Verzoek'
+servers:
+  - url: /api/verzoek
+    description: base url for dev env - Verzoek
+tags:
+  - name: AanbiedenVerzoekenProduct
+    description: Operations about AanbiedenVerzoekenProduct
+paths:
+  /v1/aanbieden-verzoeken-product:
+    post:
+      tags:
+        - AanbiedenVerzoekenProduct
+      summary: Voeg een nieuw aanbieden verzoek product toe
+      operationId: voegAanbiedenVerzoekenProductToe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoegAanbiedenVerzoekenProductToeRequestBody'
+      responses:
+        201:
+          description: succesvol toevoegen van aanbieden verzoek product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoegAanbiedenVerzoekenProductToeResponse'
+        400:
+          description: slechte aanvraag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: interne serverfout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    KetenpartnerInschrijving:
+      type: object
+      properties:
+        ketenpartnerIdentificatie:
+          type: string
+          example: 123456
+        klantnummer:
+          type: string
+          example: 123456789
+    VerzoekTotIntrekkingBody:
+      type: object
+      properties:
+        ketenidentificatie:
+          type: string
+          format: uuid
+          example: 7a004bc6-75f0-48e9-bc6f-fae278c516c0
+        klantreferentie:
+          type: string
+          example: Hypotheek 20191028-001
+        ingediendNamensKetenpartner:
+          type: object
+          properties:
+            NotarisProtocolhouder:
+              $ref: '#/components/schemas/KetenpartnerInschrijving'
+            Gerechtsdeurwaarder:
+              $ref: '#/components/schemas/KetenpartnerInschrijving'
+            Bewaarder:
+              $ref: '#/components/schemas/KetenpartnerInschrijving'
+            Bewindvoerder:
+              $ref: '#/components/schemas/KetenpartnerInschrijving'
+            Curator:
+              $ref: '#/components/schemas/KetenpartnerInschrijving'
+            Advocaat:
+              $ref: '#/components/schemas/KetenpartnerInschrijving'
+            Belastingdeurwaarder:
+              $ref: '#/components/schemas/KetenpartnerInschrijving'
+        inTeTrekkenStuk:
+          type: object
+          properties:
+            tiaStukGegevens:
+              type: object
+              properties:
+                deelEnNummer:
+                  type: object
+                  properties:
+                    deel:
+                      type: string
+                    nummer:
+                      type: string
+                    registercode:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        waarde:
+                          type: string
+                    soortRegister:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        waarde:
+                          type: string
+                indicatieVerbetering:
+                  type: boolean
+                  example: false
+        inTeTrekkenVerzoek:
+          type: string
+          format: uuid
+          example: 958a24dc-f97c-11e9-8f0b-362b9e155667
+
+    VoegAanbiedenVerzoekenProductToeResponse:
+      type: object
+      required:
+        - aanbiedenVerzoekenProductId
+      properties:
+        aanbiedenVerzoekenProductId:
+          type: string
+          format: uuid
+    VoegAanbiedenVerzoekenProductToeRequestBody:
+      type: object
+      properties:
+        aanverzoekenRequest:
+          type: object
+          $ref: '#/components/schemas/aanverzoekenRequestBody'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    aanverzoekenRequestBody:
+      type: object
+      properties:
+        vraag:
+          type: object
+          properties:
+            aanverzoekenProduct:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: ABC
+                productIdentificatie:
+                  type: string
+                  format: uuid
+                  example: 2da06183-74a4-425d-8461-a82d70880456
+                bevat:
+                  type: object
+                  properties:
+                    VerzoekTotIntrekking:
+                      $ref: '#/components/schemas/VerzoekTotIntrekkingBody'
